@@ -4,14 +4,14 @@ import tmarkuszewski.model.Card;
 import tmarkuszewski.model.CardColor;
 import tmarkuszewski.model.CardType;
 import tmarkuszewski.model.Deck;
-
-import java.util.Collection;
+import tmarkuszewski.view.View;
 
 public class Test {
     public static void main (String[] args){
         Card c1 = new Card(CardColor.Hearts, CardType.D);
         System.out.println(c1.toString());
         Deck d1 = new Deck();
+        View.render();
 
         c1 = d1.getCardFromDeck();
         //System.out.println(d1);
