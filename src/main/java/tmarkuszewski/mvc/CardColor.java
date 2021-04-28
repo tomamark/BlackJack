@@ -1,9 +1,9 @@
-package tmarkuszewski.model;
+package tmarkuszewski.mvc;
 /*
 * Typ wyliczeniowy def. kolory kart w talii
 * */
 
-public enum CardColor {
+enum CardColor {
     Hearts ("H"),                     //kier
     Diamonds("D"),                   //karo
     Spades("S"),                     //pik

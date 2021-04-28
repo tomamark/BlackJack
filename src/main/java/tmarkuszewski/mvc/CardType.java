@@ -1,6 +1,6 @@
-package tmarkuszewski.model;
+package tmarkuszewski.mvc;
 
-public enum CardType {
+enum CardType {
     N2 (2,"2"),     //Dwójka
     N3 (3,"3"),
     N4 (4,"4"),
@@ -23,7 +23,7 @@ public enum CardType {
         this.cardSymbol = cardSymbol;
     }
 
-    public int getCardValue() {
+    protected int getCardValue() {
         return cardValue;
     }
 

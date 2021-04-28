@@ -1,4 +1,5 @@
-package tmarkuszewski.model;
+package tmarkuszewski.mvc;
+
 /*
 * Klasa opisująca kartę do gry
 * */
@@ -6,14 +7,14 @@ public class Card {
 private CardColor cardColor;        //kolor karty
 private CardType cardType;          //"typ" karty (2,3,....,J,D,K,A)
 
-    public Card(CardColor cardColor, CardType cardType) {
+    protected Card(CardColor cardColor, CardType cardType) {
         this.cardColor = cardColor;
         this.cardType = cardType;
     }
 
     /*
     * pobiera wartość liczbową karty*/
-    public int getValue() {
+    protected int getValue() {
         return cardType.getCardValue();
     }
 

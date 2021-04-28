@@ -1,4 +1,8 @@
-package tmarkuszewski.model;
+package tmarkuszewski.mvc;
+
+import tmarkuszewski.mvc.Card;
+import tmarkuszewski.mvc.CardColor;
+import tmarkuszewski.mvc.CardType;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -6,13 +10,13 @@ import java.util.Stack;
 /*
 * Klasa opisująca talię kart
 * */
-public class Deck {
-  Stack<Card> playingCards;
-  int numberOfCardsLeft;
+class Deck {
+    Stack<Card> playingCards;
+    int numberOfCardsLeft;
 
-    public Deck() {
-        playingCards = new Stack<>();
-        generateDeck();
+        Deck() {
+            playingCards = new Stack<>();
+            generateDeck();
 
     }
 
@@ -31,12 +35,12 @@ public class Deck {
               numberOfCardsLeft++;
             }
         }
-        Collections.shuffle(playingCards);
+        Collections.shuffle(playingCards); // Tasuje stos (kolekcję)
     }
     /*
     * Pobiera kartę ze stosu
     * */
-    public Card getCardFromDeck(){
+    Card getCardFromDeck(){
         if (numberOfCardsLeft>0){
             numberOfCardsLeft--;
             return playingCards.pop();
