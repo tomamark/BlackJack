@@ -13,8 +13,5 @@ public class BlackJack {
 
         new Controller();
 
-
-
-
     }
 }

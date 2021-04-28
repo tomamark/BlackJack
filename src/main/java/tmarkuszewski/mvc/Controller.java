@@ -45,8 +45,8 @@ public class Controller {
                 }
             }
 
-            Player nextPlayer = new Player(playerName); //tworzymy gracza
-            tableOfPlayers[i] = nextPlayer;
+            Player nextPlayer = new Player(playerName);     //tworzymy gracza
+            tableOfPlayers[i] = nextPlayer;                 //dodajemy do tabeli
 
         }
     }
