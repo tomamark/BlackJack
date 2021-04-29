@@ -30,11 +30,49 @@ public class View {
     }
 
     static void render (Player[] tableOfPlayers){
-        clearScreen();
+        String line = PURPLE+"Wins: ";
+        Player player;
         for (int i = 0; i < tableOfPlayers.length; i++) {
-            Player player = tableOfPlayers[i];
-            System.out.println(playerColor[i]+player.getPlayerName());
+            player = tableOfPlayers[i];
+            line += getColoredPlayerName (player,i);
+            line += player.getPlayerScore()+" | ";
+
         }
+        System.out.println(line);
+        for (int i = 0; i < tableOfPlayers.length; i++) {
+            player = tableOfPlayers[i];
+            line = getColoredPlayerName(player,i);
+            System.out.println(line);
+            int score = player.getPlayerScore();
+            line = "Score: "+score;
+            System.out.println(line);
+            line = "Cards: ";
+            if (score>0){
+                line += getPlayerCards(player);
+            }
+            System.out.println(line);
+        }
+
+    }
+
+   /* public static void render(int[] scoreboard, Player[] tableOfPlayers) {
+        String line = PURPLE+"Wins: ";
+        for (int i = 0; i < scoreboard.length; i++) {
+            line += getColoredPlayerName (tableOfPlayers,i);
+            line += scoreboard[i]+" | ";
+
+        }
+        System.out.println(line);
+
+    }*/
+
+    private static String getColoredPlayerName(Player player, int playerNumber) {
+
+        return (playerColor[playerNumber]+player.getPlayerName()+"\t");
+    }
+
+    private static String getPlayerCards(Player player) {
+        return (player.getPlayerHand());
 
     }
     /*
@@ -51,7 +89,8 @@ public class View {
             }
         } catch (InterruptedException | IOException ex) {}
     }*/
-    private static void clearScreen(){
+
+    static void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }

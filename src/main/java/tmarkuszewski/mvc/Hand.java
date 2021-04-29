@@ -15,9 +15,26 @@ class Hand {
         handScore = 0;
     }
 
+    protected String getHandCards() {
+        String line = "";
+        if (!handCards.isEmpty()){
+            for (Card card: handCards) {
+                line+=card.toString();
+                line+=" ";
+            }
+        }
+
+        return (line);
+    }
+
     void insertCardToHand(Card card){
         handCards.add(card);
         handScore += card.getValue();
+    }
+
+    protected int getHandScore() {
+
+        return handScore;
     }
 }
 
