@@ -23,23 +23,31 @@ public class Controller {
         setPlayers();                                       // Tworzymy graczy
 
         /*
-        * Główna pętla programu
+        * Główna pętla programu (do...while)
         * wykonuje się aż gracze nie zdecydują o wyjściu z gry
         * */
-        do {
+        do {                                    //while (playAgain)
             View.clearScreen();
-            View.render(tableOfPlayers);
-            Deck deck = new Deck();             //
+            //View.render(tableOfPlayers,5);
+            Deck deck = new Deck();             //generujemy karty
             /*
             * Pętla for ... powtarza czynności dla każdego gracza
             * */
-            for (int i = 1 ; i <numberOfPlayers ; i++) {
+            for (int i = 1 ; i <numberOfPlayers+1 ; i++) {
+                View.render(tableOfPlayers,i);
                 Player player = tableOfPlayers[i];
                 do {
+                    Card cardForPlayer = deck.getCardFromDeck();  // Pobieramy kartę dla gracza
+                    giveNextCardToPlayer(i, player, cardForPlayer);
+                    if (!player.getHasFinished()) {
+                        askForPlayerDecision(i, player);
+                    }
 
 
                 }while (!player.getHasFinished());
+
             }
+            View.render(tableOfPlayers,0);
 
 
          }while (playAgain);
@@ -47,6 +55,29 @@ public class Controller {
 
 
     }
+
+    private void askForPlayerDecision(int playerNumber, Player player) {
+        View.showQuestion(playerNumber, player);
+        boolean validAnswer = false;
+        String answer;
+        while (!validAnswer){
+           answer = getStringFromConsole().toUpperCase();
+            if (answer.equals("P") || answer.equals("PASS")){
+                player.setHasFinished(true);
+                validAnswer = true;
+            }
+            if (answer.equals("N") || answer.equals("NEXT")){
+                validAnswer = true;
+            }
+        }
+    }
+
+    private String getStringFromConsole() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
+
 
     private void setNumberOfPlayers() {
         String input = getStringFromConsole();
@@ -80,9 +111,10 @@ public class Controller {
 
         }
     }
+    private void giveNextCardToPlayer(int playerNumber, Player player, Card card){
+        View.showCard (playerNumber, player, card);
+        player.updatePlayerHand(card);
+        View.render(tableOfPlayers,playerNumber);
 
-    private String getStringFromConsole() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
     }
 }

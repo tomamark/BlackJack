@@ -4,10 +4,10 @@ package tmarkuszewski.mvc;
 * */
 
 enum CardColor {
-    Hearts ("H"),                     //kier
-    Diamonds("D"),                   //karo
-    Spades("S"),                     //pik
-    Clubs("C");                      //trefl
+    Hearts ("\u2661"),                     //kier
+    Diamonds("\u2662"),                   //karo
+    Spades("\u2664"),                     //pik
+    Clubs("\u2663");                      //trefl
 
     private String cardColorSymbol;
 
