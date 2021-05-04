@@ -1,8 +1,6 @@
 package tmarkuszewski;
 
 import tmarkuszewski.mvc.Controller;
-import tmarkuszewski.mvc.Player;
-
 
 /*
 * Main application class

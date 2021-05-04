@@ -1,11 +1,13 @@
 package tmarkuszewski.mvc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
 
     private int numberOfPlayers;
-    private final Player[] tableOfPlayers; // tablica z graczami
+    private Player[] tableOfPlayers; // tablica z graczami
 
 
     public Controller(){
@@ -15,6 +17,7 @@ public class Controller {
 
         boolean playAgain = false;   // koniec gry
         boolean isGameFinished;     // koniec pojedynczej partii
+
 
 
         View.render();                                      // Metoda render() bez argsów wyświetla ekran powitalny
@@ -47,13 +50,61 @@ public class Controller {
                 }while (!player.getHasFinished());
 
             }
+
+            Strategy computerStrategy = new Strategy(tableOfPlayers);
             View.render(tableOfPlayers,0);
+            // TODO: 04.05.2021  Komputer dobiera karty zgodnie ze strategią
+
+            /*
+            * Wybór zwycięzcy
+            * */
+
+            List<Integer>listOfWinners = getListOfWinners (tableOfPlayers);
+            updatePlayersWins(listOfWinners,tableOfPlayers);
+            View.showWinners (listOfWinners,tableOfPlayers);
+
 
 
          }while (playAgain);
 
 
 
+    }
+
+    private void updatePlayersWins(List<Integer> listOfWinners, Player[] tableOfPlayers) {
+        for (int number:listOfWinners) {
+            tableOfPlayers[number].incrementPlayerNumberOfWins();
+        }
+    }
+
+    private List<Integer> getListOfWinners(Player[] tableOfPlayers) {
+       List<Integer> listOfWinners = new ArrayList<>();
+       int maxStatus = 0;
+       int maxScore = 0;
+        for (int i = 0; i < tableOfPlayers.length; i++) {
+            Player player = tableOfPlayers[i];
+            int playerStatus = player.getPlayerHandStatus();
+
+            if (playerStatus == maxStatus){             //W przypadku gdy statusy są równe porównujemy punkty
+                if (player.getPlayerScore() > maxScore){    // jesli wiecej punktow to czyscimy liste
+                    listOfWinners.clear();
+                    listOfWinners.add(i);               //dodajemy aktualny numer do listy
+                    maxScore = player.getPlayerScore(); // aktualizujemy max wynik
+                }
+                if (player.getPlayerScore() == maxScore){ // jesli statusy i punkty rowne to remis
+                    if (!listOfWinners.contains(i)) listOfWinners.add(i);
+                }
+
+            }
+            if (playerStatus > maxStatus){                // Porównujemy statusy kart graczy
+                listOfWinners.clear();                    // Jesli aktualny jest wyzszy czyścimy liste
+                listOfWinners.add(i);                     // dodajemy nr aktualny gracza do listy
+                maxStatus = playerStatus;                 // aktualizujemy max status
+                maxScore = player.getPlayerScore();       // i punkty
+            }
+        }
+
+        return listOfWinners;
     }
 
     private void askForPlayerDecision(int playerNumber, Player player) {

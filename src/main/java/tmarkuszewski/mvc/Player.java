@@ -1,7 +1,5 @@
 package tmarkuszewski.mvc;
 
-import tmarkuszewski.BlackJack;
-import tmarkuszewski.mvc.Hand;
 
 /*
 *
@@ -11,7 +9,6 @@ public class Player {
     private String playerName;          // nazwa gracza
     private int playerNumberOfWins;     //liczba wygranych partii
     private Hand playerHand;            //karty gracza
-    private boolean isPlayerWinning;    //czy gracz prowadzi w partii
     private boolean hasFinished;
 
 
@@ -19,7 +16,6 @@ public class Player {
         this.playerName = playerName;
         playerNumberOfWins = 0;
         playerHand = new Hand();
-        isPlayerWinning = false;
         hasFinished = false;
     }
 
@@ -53,6 +49,10 @@ public class Player {
         }
         return result;
     }
+    protected int getPlayerHandStatus(){
+        HandStatus handStatus = playerHand.getHandStatus();
+        return (handStatus.getPriority());
+    }
     protected int getPlayerScore(){        //zwraca aktualny wynik gracza w partii
 
         return (playerHand.getHandScore());
@@ -76,8 +76,8 @@ public class Player {
         return playerNumberOfWins;
     }
 
-    public void setPlayerNumberOfWins(int playerNumberOfWins) {
-        this.playerNumberOfWins = playerNumberOfWins;
+    public void incrementPlayerNumberOfWins() {
+        this.playerNumberOfWins++;
     }
     /*protected void updatePlayerScore( cardValue) {
         playerHand.insertCardToHand(cardValue);

@@ -1,5 +1,7 @@
 package tmarkuszewski.mvc;
 
+import java.util.List;
+
 public class View {
     /*
     definicje kolorów
@@ -120,6 +122,27 @@ public class View {
     static void showQuestion(int playerNumber, Player player) {
         System.out.print(playerColor[playerNumber]+player.getPlayerName()+", do you want [N]ext card or [P]ass? : ");
     }
+    public static void showWinners(List<Integer> listOfWinners, Player[] tableOfPlayers) {
+        String firstWord = "";
+        String secondWord = "is";
+        String stringOfWinners = "";
+        if (listOfWinners.isEmpty()){
+            System.out.println("No winner this time...");
+        }else {
+            for (int number:listOfWinners) {
+                Player player = tableOfPlayers[number];
+                stringOfWinners += playerColor[number]+player.getPlayerName()+" ";
+            }
+            if (listOfWinners.size()>1){
+                firstWord = "s";
+                secondWord = "are";
+            }
+            System.out.print("The winner"+firstWord+" of this round " +secondWord+": " + stringOfWinners);
+            System.out.println(PURPLE+"Congratulations!!!");
+        }
+
+    }
+
     static void pause (long milis){
         long timestamp = System.currentTimeMillis();
         do {
