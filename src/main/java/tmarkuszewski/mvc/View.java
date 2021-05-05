@@ -24,6 +24,10 @@ public class View {
     static void render(){
         clearScreen();
         System.out.println("Welcome to Black Jack game by TM");
+        System.out.println("The value of J,D & K is 10");
+        System.out.println("The value of A is 11 or 1 (depending on your actual score)");
+        System.out.print("Two A cards give a wink");
+        System.out.println("Good luck!!!");
         System.out.print("Enter number of players: 1-4 [1] ");
     }
 
@@ -64,16 +68,6 @@ public class View {
 
     }
 
-   /* public static void render(int[] scoreboard, Player[] tableOfPlayers) {
-        String line = PURPLE+"Wins: ";
-        for (int i = 0; i < scoreboard.length; i++) {
-            line += getColoredPlayerName (tableOfPlayers,i);
-            line += scoreboard[i]+" | ";
-
-        }
-        System.out.println(line);
-
-    }*/
 
     private static String getColoredPlayerName(Player player, int playerNumber) {
 
@@ -109,6 +103,9 @@ public class View {
         //System.out.println("\f");
     }
 
+    /*
+    * Pokazuje wylosowaną kartę
+    * */
     static void showCard(int playerNumber, Player player, Card card) {
         System.out.print(playerColor[playerNumber]+player.getPlayerName()+" your new card is: ");
         for (int i = 0; i < 9; i++) {
@@ -122,7 +119,7 @@ public class View {
     static void showQuestion(int playerNumber, Player player) {
         System.out.print(playerColor[playerNumber]+player.getPlayerName()+", do you want [N]ext card or [P]ass? : ");
     }
-    public static void showWinners(List<Integer> listOfWinners, Player[] tableOfPlayers) {
+    static void showWinners(List<Integer> listOfWinners, Player[] tableOfPlayers) {
         String firstWord = "";
         String secondWord = "is";
         String stringOfWinners = "";
@@ -148,5 +145,20 @@ public class View {
         do {
         } while (System.currentTimeMillis() < timestamp + milis);
 
+    }
+
+    static void computerSay(boolean decision) {
+        String answer = (decision)? " I take next card !":" No way... I pass.";
+        System.out.print(playerColor[0]+"Hmm... Let me think.");
+        for (int i = 0; i < 10; i++) {
+            System.out.print(".");
+            pause(50);
+        }
+        System.out.println(answer);
+        pause(1000);
+    }
+
+    static void showNextGameQuestion() {
+        System.out.print(PURPLE+"Do you want play [N]ext game or [Q]uit? : ");
     }
 }

@@ -7,17 +7,13 @@ import java.util.Scanner;
 public class Controller {
 
     private int numberOfPlayers;
-    private Player[] tableOfPlayers; // tablica z graczami
+    private final Player[] tableOfPlayers; // tablica z graczami
 
 
     public Controller(){
     /*
     *   Ustawienia startowe gry
     *  */
-
-        boolean playAgain = false;   // koniec gry
-        boolean isGameFinished;     // koniec pojedynczej partii
-
 
 
         View.render();                                      // Metoda render() bez argsów wyświetla ekran powitalny
@@ -31,7 +27,7 @@ public class Controller {
         * */
         do {                                    //while (playAgain)
             View.clearScreen();
-            //View.render(tableOfPlayers,5);
+            resetPlayers(tableOfPlayers);
             Deck deck = new Deck();             //generujemy karty
             /*
             * Pętla for ... powtarza czynności dla każdego gracza
@@ -51,9 +47,30 @@ public class Controller {
 
             }
 
+            /*
+            * Teraz do akcji rusza komputer z obmyslona swoja strategia w klasie Strategy
+            *
+            * */
+
             Strategy computerStrategy = new Strategy(tableOfPlayers);
+            Player computer = tableOfPlayers[0];
             View.render(tableOfPlayers,0);
-            // TODO: 04.05.2021  Komputer dobiera karty zgodnie ze strategią
+            do {
+                Card cardForPlayer = deck.getCardFromDeck();                    // Pobieramy kartę dla komputera
+                giveNextCardToPlayer(0, computer, cardForPlayer);   //aktualizujemy jego karty
+                //View.render(tableOfPlayers,0);
+                if (!computer.getHasFinished()){                                // Jesli komputer nie skonczył
+                    //View.render(tableOfPlayers,0);
+                    boolean decision = computerStrategy.computerPlay(computer); // to decyduje czy grać dalej,
+                    View.computerSay (decision);                                // wyświetla informację,
+                    computer.setHasFinished(!decision);                         // aktualizuje pole hasFinished
+                }
+
+            }while(!computer.getHasFinished());                                 // aż komputer skończy grę
+
+            View.render(tableOfPlayers,-1);
+
+
 
             /*
             * Wybór zwycięzcy
@@ -65,27 +82,66 @@ public class Controller {
 
 
 
-         }while (playAgain);
+         }while (playAgain());
 
 
 
     }
 
+    /*
+    * Przywracanie wartości domyślnych graczy
+    * */
+    private void resetPlayers(Player[] tableOfPlayers) {
+        for (Player player : tableOfPlayers) {
+            player.reset();
+        }
+    }
+
+    /*
+    * Pytanie czy następna gra
+    * */
+    private boolean playAgain() {
+        View.showNextGameQuestion();
+        boolean validAnswer = false;
+        String answer;
+        while (!validAnswer) {
+            answer = getStringFromConsole().toUpperCase();
+            if (answer.equals("N") || answer.equals("NEXT")) {
+                validAnswer = true;
+                return true;
+            }
+            if (answer.equals("Q") || answer.equals("QUIT")) {
+                validAnswer = true;
+                return false;
+            }
+        }
+        return false;
+
+    }
+
+
+    /*
+    * Aktulizacja liczby zwycięstw
+    * */
     private void updatePlayersWins(List<Integer> listOfWinners, Player[] tableOfPlayers) {
         for (int number:listOfWinners) {
             tableOfPlayers[number].incrementPlayerNumberOfWins();
         }
     }
 
+
+    /*
+    * Ustalanie listy zwycięzców
+    * */
     private List<Integer> getListOfWinners(Player[] tableOfPlayers) {
        List<Integer> listOfWinners = new ArrayList<>();
-       int maxStatus = 0;
+       HandStatus maxStatus = HandStatus.Normal;
        int maxScore = 0;
         for (int i = 0; i < tableOfPlayers.length; i++) {
             Player player = tableOfPlayers[i];
-            int playerStatus = player.getPlayerHandStatus();
+            HandStatus playerStatus = player.getPlayerHandStatus();
 
-            if (playerStatus == maxStatus){             //W przypadku gdy statusy są równe porównujemy punkty
+            if (playerStatus.equals(maxStatus)){             //W przypadku gdy statusy są równe porównujemy punkty
                 if (player.getPlayerScore() > maxScore){    // jesli wiecej punktow to czyscimy liste
                     listOfWinners.clear();
                     listOfWinners.add(i);               //dodajemy aktualny numer do listy
@@ -96,17 +152,20 @@ public class Controller {
                 }
 
             }
-            if (playerStatus > maxStatus){                // Porównujemy statusy kart graczy
-                listOfWinners.clear();                    // Jesli aktualny jest wyzszy czyścimy liste
-                listOfWinners.add(i);                     // dodajemy nr aktualny gracza do listy
-                maxStatus = playerStatus;                 // aktualizujemy max status
-                maxScore = player.getPlayerScore();       // i punkty
+            if (playerStatus.compare(playerStatus,maxStatus) > 0){   // Porównujemy statusy kart graczy
+                listOfWinners.clear();                              // Jesli aktualny jest wyzszy czyścimy liste
+                listOfWinners.add(i);                               // dodajemy nr aktualny gracza do listy
+                maxStatus = playerStatus;                           // aktualizujemy max status
+                maxScore = player.getPlayerScore();                 // i punkty
             }
         }
 
         return listOfWinners;
     }
 
+    /*
+    * Pytanie gracza o decyzję
+    * */
     private void askForPlayerDecision(int playerNumber, Player player) {
         View.showQuestion(playerNumber, player);
         boolean validAnswer = false;
@@ -123,13 +182,18 @@ public class Controller {
         }
     }
 
+    /*
+    * Metoda do pobierania odpowiedzi graczy
+    * */
     private String getStringFromConsole() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
 
-
+    /*
+    * Metoda do walidacji liczby graczy
+    * */
     private void setNumberOfPlayers() {
         String input = getStringFromConsole();
         try{
@@ -143,6 +207,9 @@ public class Controller {
 
     }
 
+    /*
+    * Tworzenie tabeli z graczami
+    * */
     private void setPlayers(){
         Player computerPlayer = new Player("Computer");     //tworzymy gracza dla komputera...
         tableOfPlayers[0] = computerPlayer;                           //... i dodajemy do tabeli pod indeks 0
@@ -162,6 +229,10 @@ public class Controller {
 
         }
     }
+
+    /*
+    * Dodawanie karty do "ręki" gracza
+    * */
     private void giveNextCardToPlayer(int playerNumber, Player player, Card card){
         View.showCard (playerNumber, player, card);
         player.updatePlayerHand(card);

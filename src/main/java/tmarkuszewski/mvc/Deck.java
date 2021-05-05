@@ -1,8 +1,5 @@
 package tmarkuszewski.mvc;
 
-import tmarkuszewski.mvc.Card;
-import tmarkuszewski.mvc.CardColor;
-import tmarkuszewski.mvc.CardType;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -11,7 +8,7 @@ import java.util.Stack;
 * Klasa opisująca talię kart
 * */
 class Deck {
-    Stack<Card> playingCards;
+    Stack<Card> playingCards;   // Stos kart
     int numberOfCardsLeft;
 
         Deck() {
@@ -22,7 +19,7 @@ class Deck {
 
 
     /*
-    Generuje talię kart (każdy kolor z każdą figurą)
+    Generuje talię kart (miesza każdy kolor z każdą figurą)
     i dodaje do stosu. Potem tasuje karty
     * */
     private void generateDeck(){

@@ -1,5 +1,8 @@
 package tmarkuszewski.mvc;
 
+/*
+* Typy kart i ich wartości
+* */
 enum CardType {
     N2 (2,"2"),     //Dwójka
     N3 (3,"3"),
@@ -23,7 +26,7 @@ enum CardType {
         this.cardSymbol = cardSymbol;
     }
 
-    protected int getCardValue() {
+    int getCardValue() {
         return cardValue;
     }
 

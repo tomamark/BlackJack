@@ -1,6 +1,5 @@
 package tmarkuszewski.mvc;
 
-import tmarkuszewski.mvc.Card;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,11 +7,13 @@ import java.util.List;
 * Karty w ręku gracza i ich status
 * */
 class Hand {
-    private List<Card> handCards;    //lista kart ;
+    private final List<Card> handCards;    //lista kart ;
     private int handScore;          //wartość kart w zestawie;
     private HandStatus handStatus;
 
-
+    /*
+    * Konstruktor
+    * */
     Hand() {
         handCards = new LinkedList<>();
         handCards.clear();
@@ -20,6 +21,9 @@ class Hand {
         handStatus = HandStatus.Normal;
     }
 
+    /*
+    * Zwraca łańcuch z symbolami kart w ręku
+    * */
     protected String getHandCards() {
         String line = "";
         if (!handCards.isEmpty()){
@@ -33,8 +37,9 @@ class Hand {
     }
 
 
-
-
+    /*
+    * Dodaje karty do "ręki"
+    * */
     void insertCardToHand(Card card){
         handCards.add(card);
         handScore += card.getValue();

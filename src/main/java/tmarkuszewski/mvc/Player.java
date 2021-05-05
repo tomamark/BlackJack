@@ -6,80 +6,108 @@ package tmarkuszewski.mvc;
 * */
 public class Player {
 
-    private String playerName;          // nazwa gracza
+    private final String playerName;          // nazwa gracza
     private int playerNumberOfWins;     //liczba wygranych partii
     private Hand playerHand;            //karty gracza
     private boolean hasFinished;
 
-
-    protected Player(String playerName) {
+    /*
+    * Konstruktor
+    * */
+    Player(String playerName) {
         this.playerName = playerName;
         playerNumberOfWins = 0;
         playerHand = new Hand();
         hasFinished = false;
     }
 
-    protected String getPlayerName() {
+    String getPlayerName() {
         return playerName;
     }
 
-    protected String getPlayerHand() {
+    String getPlayerHand() {
         return playerHand.getHandCards();
     }
-    protected String getPlayerStatus(){
+
+    String getPlayerStatus(){
         HandStatus status = playerHand.getHandStatus();
         String result = "";
         switch (status){
             case Normal -> {
                 result = (hasFinished)? "Passed":"Still in play...";
-                break;
             }
             case BlackJack -> {
                 result =  "BlackJack !!!";
-            break;
             }
             case Wink -> {
                 result ="Wink!!!! Wooow!!!";
-            break;
             }
             case Busted -> {
                 result = "Oh man... you are busted! :-(";
-                break;
             }
         }
         return result;
     }
-    protected int getPlayerHandStatus(){
-        HandStatus handStatus = playerHand.getHandStatus();
-        return (handStatus.getPriority());
+
+    /*
+    * Pobiera status gracza
+    * */
+    HandStatus getPlayerHandStatus(){
+        return (playerHand.getHandStatus());
     }
-    protected int getPlayerScore(){        //zwraca aktualny wynik gracza w partii
+
+    /*
+    * Pobiera punkty gracza
+    * */
+    int getPlayerScore(){        //zwraca aktualny wynik gracza w partii
 
         return (playerHand.getHandScore());
     }
 
-    protected boolean getHasFinished() {
+    /*
+    * Czy gracz zakończył partię
+    * */
+    boolean getHasFinished() {
         return (hasFinished);
     }
-    public void setHasFinished(boolean hasFinished){
+
+    /*
+    * Ustawia zakończenie partii przez gracza
+    * */
+    void setHasFinished(boolean hasFinished){
         this.hasFinished = hasFinished;
     }
 
-    public void updatePlayerHand(Card cardForPlayer) {
+    /*
+    * Uaktualnia karty i status gracza
+    * */
+    void updatePlayerHand(Card cardForPlayer) {
         playerHand.insertCardToHand(cardForPlayer);                 //dodajemy kartę do ręki gracza
         if (!(playerHand.getHandStatus() == HandStatus.Normal)) {  //sprawdzamy czy jescze moze grać
             hasFinished = true;
         }
     }
 
-    public int getPlayerNumberOfWins() {
+    /*
+    * Pobiera liczbe zwycięstw
+    * */
+    int getPlayerNumberOfWins() {
         return playerNumberOfWins;
     }
 
-    public void incrementPlayerNumberOfWins() {
+    /*
+    * Zwiększa liczbę zwycięstw o 1
+    * */
+    void incrementPlayerNumberOfWins() {
         this.playerNumberOfWins++;
     }
-    /*protected void updatePlayerScore( cardValue) {
-        playerHand.insertCardToHand(cardValue);
-    }*/
+
+    /*
+    * Przywraca gracza do ustawień począt.
+    * */
+    void reset() {
+        this.hasFinished = false;
+        this.playerHand = new Hand();
+    }
+
 }
