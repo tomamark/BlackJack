@@ -26,7 +26,7 @@ public class View {
         System.out.println("Welcome to Black Jack game by TM");
         System.out.println("The value of J,D & K is 10");
         System.out.println("The value of A is 11 or 1 (depending on your actual score)");
-        System.out.print("Two A cards give a wink");
+        System.out.println("Two A cards give a wink");
         System.out.println("Good luck!!!");
         System.out.print("Enter number of players: 1-4 [1] ");
     }

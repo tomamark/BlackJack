@@ -9,7 +9,6 @@ import java.util.Stack;
 * */
 class Deck {
     Stack<Card> playingCards;   // Stos kart
-    int numberOfCardsLeft;
 
         Deck() {
             playingCards = new Stack<>();
@@ -23,13 +22,11 @@ class Deck {
     i dodaje do stosu. Potem tasuje karty
     * */
     private void generateDeck(){
-        numberOfCardsLeft=0;
         Card card;
         for (CardColor cardColor:CardColor.values()) {
             for (CardType cardType: CardType.values()) {
               card = new Card(cardColor,cardType);
               playingCards.add(card);
-              numberOfCardsLeft++;
             }
         }
         Collections.shuffle(playingCards); // Tasuje stos (kolekcję)
@@ -38,8 +35,7 @@ class Deck {
     * Pobiera kartę ze stosu
     * */
     Card getCardFromDeck(){
-        if (numberOfCardsLeft>0){
-            numberOfCardsLeft--;
+        if (playingCards.size()>0){
             return playingCards.pop();
         }
         else {
