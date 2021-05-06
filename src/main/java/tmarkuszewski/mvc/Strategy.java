@@ -33,7 +33,8 @@ public class Strategy {
             for (int i = 1; i < tableOfPlayers.length; i++) {
                 player = tableOfPlayers[i];
                 int playerScore = player.getPlayerScore();
-                if (playerScore > desiredScore){
+                HandStatus playerStatus = player.getPlayerHandStatus();
+                if (playerScore > desiredScore && !playerStatus.equals(HandStatus.Busted)){
                     desiredScore = playerScore;
                 }
             }

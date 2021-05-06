@@ -44,8 +44,10 @@ class Hand {
         handCards.add(card);
         handScore += card.getValue();
 
-        if (handScore > 21 && card.getValue()==11) {  //Jeśli przekroczylismy 21, ale mamy asa
-            handScore -=10;                           // to jego wartość jest równa 1
+        if (handScore > 21 && card.getValue()==11) {  //Jeśli przekroczylismy 21, ale dostalismy asa
+            if (!(handCards.size() == 2)) {             // (sprawdzamy czy to nie 2 asy)
+                handScore -= 10;                         // to jego wartość jest równa 1
+            }
         }
         /*
         * Od razu aktualizujemy status */
