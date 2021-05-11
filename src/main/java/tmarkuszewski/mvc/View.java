@@ -147,9 +147,9 @@ public class View {
 
     }
 
-    static void computerSay(boolean decision) {
+    static void computerSay(boolean decision, String strategy) {
         String answer = (decision)? " I take next card !":" No way... I pass.";
-        System.out.print(playerColor[0]+"Hmm... Let me think.");
+        System.out.print(playerColor[0]+strategy+"... Let me think.");
         for (int i = 0; i < 10; i++) {
             System.out.print(".");
             pause(50);

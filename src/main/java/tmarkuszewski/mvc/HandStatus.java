@@ -5,10 +5,11 @@ import java.util.Comparator;
 /*
 * Typ okreslający statusy kart gracza*/
 public enum HandStatus implements Comparator<HandStatus> {
+    Busted(-1),                 //      >21 (fura)
     Normal(1),                  //wynik <21
     BlackJack(2),               //      =21 (oko)
-    Wink(3),                    //      =22 (perskie oko)
-    Busted(-1);                 //      >21 (fura)
+    Wink(3);                    //      =22 (perskie oko)
+
     private final int priority;
 
     HandStatus(int priority) {

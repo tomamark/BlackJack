@@ -53,6 +53,7 @@ public class Controller {
             * */
 
             Strategy computerStrategy = new Strategy(tableOfPlayers);
+            String strategy = computerStrategy.toString();
             Player computer = tableOfPlayers[0];
             View.render(tableOfPlayers,0);
             do {
@@ -62,7 +63,7 @@ public class Controller {
                 if (!computer.getHasFinished()){                                // Jesli komputer nie skonczył
                     //View.render(tableOfPlayers,0);
                     boolean decision = computerStrategy.computerPlay(computer); // to decyduje czy grać dalej,
-                    View.computerSay (decision);                                // wyświetla informację,
+                    View.computerSay (decision,strategy);                                // wyświetla informację,
                     computer.setHasFinished(!decision);                         // aktualizuje pole hasFinished
                 }
 

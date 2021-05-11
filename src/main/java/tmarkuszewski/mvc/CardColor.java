@@ -9,7 +9,7 @@ enum CardColor {
     Spades("\u2664"),                     //pik
     Clubs("\u2663");                      //trefl
 
-    private String cardColorSymbol;
+    private final String cardColorSymbol;
 
     CardColor(String cardColorSymbol) {
         this.cardColorSymbol = cardColorSymbol;

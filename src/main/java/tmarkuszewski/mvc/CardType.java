@@ -18,8 +18,8 @@ enum CardType {
     K (10,"K"),
     A (11,"A");      //As
 
-    private int cardValue;
-    private String cardSymbol;
+    private final int cardValue;
+    private final String cardSymbol;
 
     CardType(int cardValue, String cardSymbol) {
         this.cardValue = cardValue;
